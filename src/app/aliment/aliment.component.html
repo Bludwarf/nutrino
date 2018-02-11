@@ -1,0 +1,114 @@
+<div *ngIf="!aliment">
+  On appelle la base de données USDA...
+</div>
+<div *ngIf="aliment"><!-- TODO pas possible de faire plus simple car aliment est en async -->
+
+  <h1 *ngIf="aliment">{{ aliment.nom }}</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Nutriment</th>
+      <th>/100g</th>
+      <th>100% AJR</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+      <td>Vitamine C</td>
+      <td>{{aliment.nutriments.C}}mg</td>
+      <td>{{formatterPoids(poids100pAjr(aliment.nutriments.C, ajr.nutriments.C))}}</td>
+    </tr>
+    <tr>
+      <td>Phosphore</td>
+      <td>{{aliment.nutriments.phosphore}}mg</td>
+      <td>{{formatterPoids(poids100pAjr(aliment.nutriments.phosphore, ajr.nutriments.phosphore))}}</td>
+    </tr>
+    <tr>
+      <td>Potassium</td>
+      <td>{{aliment.nutriments.potassium}}mg</td>
+      <td>{{formatterPoids(poids100pAjr(aliment.nutriments.potassium, ajr.nutriments.potassium))}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>Avec un(e) {{aliment.nom}} de {{aliment.poidsUnitaire}}g</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Nutriment</th>
+      <th>% AJR</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+      <td>Calorie</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.calorie}}" max="{{ajr.nutriments.calorie}}" unite="cal"></app-jauge-nutriment></td>
+    </tr>
+    <tr>
+      <td>Glucides</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.glucide}}" max="{{ajr.nutriments.glucide}}" backgroundColor="#A4C55C"></app-jauge-nutriment></td>
+    </tr>
+    <tr>
+      <td>- Sucres</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.sucre}}" max="{{ajr.nutriments.sucre}}" backgroundColor="#A4C55C"></app-jauge-nutriment></td>
+    </tr>
+    <tr>
+      <td>- Fibres</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.fibre}}" max="{{ajr.nutriments.fibre}}" backgroundColor="#A4C55C"></app-jauge-nutriment></td>
+    </tr>
+    <tr>
+      <td>Protéines</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.proteine}}" max="{{ajr.nutriments.proteine}}" backgroundColor="#D08083"></app-jauge-nutriment></td>
+    </tr>
+    <tr>
+      <td>Lipides</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.lipide}}" max="{{ajr.nutriments.lipide}}" backgroundColor="#EED544"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.A !== undefined">
+      <td>Vitamine A</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.A}}" max="{{ajr.nutriments.A}}"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.B6 !== undefined">
+      <td>Vitamine B6</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.B6}}" max="{{ajr.nutriments.B6}}"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.C !== undefined">
+      <td>Vitamine C</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.C}}" max="{{ajr.nutriments.C}}"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.K !== undefined">
+      <td>Vitamine K</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.K}}" max="{{ajr.nutriments.K}}"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.phosphore !== undefined">
+      <td>Phosphore
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.phosphore}}" max="{{ajr.nutriments.phosphore}}"></app-jauge-nutriment></td>
+    </tr>
+    <tr *ngIf="aliment.nutriments.potassium !== undefined">
+      <td>Potassium</td>
+      <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments.potassium}}" max="{{ajr.nutriments.potassium}}"></app-jauge-nutriment></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Vitamine</th>
+      <th>% AJR</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let nomVitamine of getVitaminesPresentes(aliment)">
+        <td>Vitamine {{nomVitamine}}</td>
+        <td><app-jauge-nutriment valeur="{{aliment.poidsUnitaire / 100 * aliment.nutriments[nomVitamine]}}" max="{{ajr.nutriments[nomVitamine]}}"></app-jauge-nutriment></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

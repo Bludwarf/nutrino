@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <div class="total">
+    <div class="value-bar" [ngStyle]="{'width.%': width, 'background-color': backgroundColor}"></div>
+    <div class="third-bar"></div>
+    <div class="left-text">
+      <span class="value">{{pourcentage(valeur, max)}}</span>
+    </div>
+    <div class="right-text">
+      <span class="total-value">{{formatterValeur(valeur)}}</span>
+    </div>
+  </div>
+</div>

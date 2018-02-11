@@ -1,0 +1,38 @@
+div.wrapper {
+  background: black;
+  padding: 1px;
+  font-family: Arial, sans-serif;
+}
+
+div.total {
+  background: white;
+  position: relative;
+  width: 160px;
+  height: 22px; /* pour l'instant children + 2*padding children FIXME comment prendre la taille du texte fils ? */
+}
+
+div.value-bar {
+  position: absolute;
+  height: 100%;
+}
+
+/** Position d'un tier du total */
+div.third-bar {
+  position: absolute;
+  height: 100%;
+  width: 33%;
+  border-right: dashed 1px ;
+}
+
+div.left-text,
+div.right-text{
+  position: absolute;
+  padding: 2px 4px;
+}
+
+div.left-text {
+}
+
+div.right-text {
+  right: 0;
+}
